@@ -18,7 +18,7 @@ class App extends React.Component {
 
   generateCows() {
     return axios
-      .get('http://localhost:3000/cows')
+      .get('/cows')
       .then((res) => {
         this.setState({
           cows: res.data,

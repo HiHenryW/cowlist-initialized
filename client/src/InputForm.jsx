@@ -30,7 +30,7 @@ class AddCow extends React.Component {
     // send POST request to server with name and description
     return (
       axios
-        .post('http://localhost:3000/cows', {
+        .post('/cows', {
           name: this.state.name,
           description: this.state.description,
         })
