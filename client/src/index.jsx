@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import CowNames from './CowNames.jsx';
+import AddCow from './InputForm.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -31,7 +32,11 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <h4>Spotlight</h4>
+        <h4>Cows Names</h4>
         <CowNames cows={this.state.cows} />
+        <h4>Add New Cow</h4>
+        <AddCow />
       </div>
     );
   }
