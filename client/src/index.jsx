@@ -9,5 +9,5 @@ class App extends React.Component {
   }
 }
 
-var mountNode = document.getElementById("app");
+const mountNode = document.getElementById("app");
 ReactDOM.render(<App/>, mountNode);
