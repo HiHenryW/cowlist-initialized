@@ -31,7 +31,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <CowNames cows={this.props.cows} />
+        <CowNames cows={this.state.cows} />
       </div>
     );
   }

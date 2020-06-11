@@ -1,11 +1,13 @@
 import React from 'react';
 
-const CowNames = (props) => (
-  console.log('props passed to CowNames: ', props);
-  let data = props.cows.map((cow) => {
-    return <li>{cow.name}</li>;
-  });
-  return <ol>{data}</ol>;
-);
+const CowNames = (props) => {
+  return (
+    <ol>
+      {props.cows.map((cow, i) => {
+        return <li key={i}>{cow.name}</li>;
+      })}
+    </ol>
+  );
+};
 
 export default CowNames;
