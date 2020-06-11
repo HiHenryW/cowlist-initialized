@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import CowNames from './CowNames.jsx';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       cows: [],
     };
@@ -16,10 +16,12 @@ class App extends React.Component {
   }
 
   generateCows() {
-    axios
+    return axios
       .get('http://localhost:3000/cows')
       .then((res) => {
-        console.log(res);
+        this.setState({
+          cows: res.data,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -27,7 +29,11 @@ class App extends React.Component {
   }
 
   render() {
-    return <div>Hello World!</div>;
+    return (
+      <div>
+        <CowNames cows={this.props.cows} />
+      </div>
+    );
   }
 }
 
