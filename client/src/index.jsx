@@ -36,7 +36,7 @@ class App extends React.Component {
         <h4>Cows Names</h4>
         <CowNames cows={this.state.cows} />
         <h4>Add New Cow</h4>
-        <AddCow />
+        <AddCow onFormSubmission={this.generateCows.bind(this)} />
       </div>
     );
   }

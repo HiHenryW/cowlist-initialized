@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 class AddCow extends React.Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class AddCow extends React.Component {
     };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleNameChange(event) {
@@ -23,9 +25,35 @@ class AddCow extends React.Component {
     });
   }
 
+  handleSubmit(event) {
+    event.preventDefault();
+    // send POST request to server with name and description
+    return (
+      axios
+        .post('http://localhost:3000/cows', {
+          name: this.state.name,
+          description: this.state.description,
+        })
+        // then reset state to empty strings
+        .then(() => {
+          this.setState({
+            name: '',
+            description: '',
+          });
+        })
+        // then rerender cows in index.jsx
+        .then(() => {
+          this.props.generateCows();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    );
+  }
+
   render() {
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <div>
           <label>
             Input Name

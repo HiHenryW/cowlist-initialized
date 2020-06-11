@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const port = 3000;
 
 // MIDDLEWARE
@@ -9,6 +10,7 @@ const parser = require('body-parser'); // helper that extracts body of incoming 
 app.listen(port, () => console.log(`App is listening on port ${port}!`));
 app.use(express.static('./client/dist')); // exposes a directory or a file to a particular URL so its contents can be publicly accessed
 app.use(parser.json()); // use the body-parser
+app.use(cors()); // deal with preflight cors requests
 
 // CONNECT TO MYSQL
 const mysql = require('mysql');
@@ -23,22 +25,20 @@ connection.connect();
 // SENDING REQUESTS TO THE DATABASE
 const getAll = (callback) => {
   const queryStr = 'SELECT id, name, description FROM cows ORDER BY id DESC';
-  connection.query(queryStr, function(err, results) {
+  connection.query(queryStr, function (err, results) {
     callback(err, results);
   });
 };
 
 const create = (data, callback) => {
   const queryStr = `INSERT INTO cows(name, description) VALUES ("${data.name}", "${data.description}")`;
-  connection.query(queryStr, function(err, results) {
+  connection.query(queryStr, function (err, results) {
     callback(err, results);
   });
 };
 
-// HANDLE INCOMING REQUESTS
 app.get('/cows', (req, res) => {
-  res.set('Access-Control-Allow-Origin', '*');
-  getAll(function(err, results) {
+  getAll(function (err, results) {
     if (err) {
       res.status(404).json(err);
     } else {
@@ -48,7 +48,7 @@ app.get('/cows', (req, res) => {
 });
 
 app.post('/cows', (req, res) => {
-  create(req.body, function(err, results) {
+  create(req.body, function (err, results) {
     if (err) {
       res.status(404).json(err);
     } else {
@@ -56,4 +56,3 @@ app.post('/cows', (req, res) => {
     }
   });
 });
-
