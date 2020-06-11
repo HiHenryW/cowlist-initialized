@@ -43,7 +43,7 @@ class AddCow extends React.Component {
         })
         // then rerender cows in index.jsx
         .then(() => {
-          this.props.generateCows();
+          this.props.onFormSubmission();
         })
         .catch((err) => {
           console.log(err);
