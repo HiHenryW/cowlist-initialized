@@ -37,6 +37,7 @@ const create = (data, callback) => {
 
 // HANDLE INCOMING REQUESTS
 app.get('/cows', (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
   getAll(function(err, results) {
     if (err) {
       res.status(404).json(err);
