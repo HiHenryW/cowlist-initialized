@@ -57,6 +57,26 @@ class App extends React.Component {
       });
   }
 
+  editCow(cowId, newDescription) {
+    let url = `/cows/${cowId}`;
+    return axios
+      .put(url, {
+        description: newDescription,
+      })
+      .then(() => {
+        this.setState({
+          spotlight: false,
+          showDescription: '',
+        });
+      })
+      .then(() => {
+        this.generateCows();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   render() {
     return (
       <div>
@@ -70,6 +90,7 @@ class App extends React.Component {
           cows={this.state.cows}
           updateSpotlight={this.updateSpotlight.bind(this)}
           deleteCow={this.deleteCow.bind(this)}
+          editCow={this.editCow.bind(this)}
         />
         <h4>Add New Cow</h4>
         <AddCow onFormSubmission={this.generateCows.bind(this)} />

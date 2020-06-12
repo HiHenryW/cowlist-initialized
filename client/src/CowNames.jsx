@@ -13,6 +13,11 @@ class CowNames extends React.Component {
     this.props.deleteCow(cowId);
   }
 
+  handleEdit(cowId) {
+    const newDescription = prompt('Please enter new description for cow');
+    this.props.editCow(cowId, newDescription);
+  }
+
   render() {
     return (
       <ol>
@@ -21,7 +26,12 @@ class CowNames extends React.Component {
           return (
             <li key={i} onClick={this.handleClick.bind(this, cow.description)}>
               <a href="#">{cow.name}</a>
-              <button onClick={this.handleDelete.bind(this, cow.id)}>Delete cow</button>
+              <button onClick={this.handleEdit.bind(this, cow.id)}>
+                Edit cow description
+              </button>
+              <button onClick={this.handleDelete.bind(this, cow.id)}>
+                Delete cow
+              </button>
             </li>
           );
         })}
