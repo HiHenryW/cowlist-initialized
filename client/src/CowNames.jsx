@@ -9,6 +9,10 @@ class CowNames extends React.Component {
     this.props.updateSpotlight(cowDescription);
   }
 
+  handleDelete(cowId) {
+    this.props.deleteCow(cowId);
+  }
+
   render() {
     return (
       <ol>
@@ -17,6 +21,7 @@ class CowNames extends React.Component {
           return (
             <li key={i} onClick={this.handleClick.bind(this, cow.description)}>
               <a href="#">{cow.name}</a>
+              <button onClick={this.handleDelete.bind(this, cow.id)}>Delete cow</button>
             </li>
           );
         })}

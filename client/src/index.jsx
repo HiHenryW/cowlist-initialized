@@ -39,6 +39,24 @@ class App extends React.Component {
     });
   }
 
+  deleteCow(cowId) {
+    let url = `/cows/${cowId}`;
+    return axios
+      .delete(url)
+      .then(() => {
+        this.setState({
+          spotlight: false,
+          showDescription: '',
+        });
+      })
+      .then(() => {
+        this.generateCows();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   render() {
     return (
       <div>
@@ -51,6 +69,7 @@ class App extends React.Component {
         <CowNames
           cows={this.state.cows}
           updateSpotlight={this.updateSpotlight.bind(this)}
+          deleteCow={this.deleteCow.bind(this)}
         />
         <h4>Add New Cow</h4>
         <AddCow onFormSubmission={this.generateCows.bind(this)} />
