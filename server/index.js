@@ -37,7 +37,25 @@ const create = (data, callback) => {
   });
 };
 
+const update = (data, queryId, callback) => {
+  const nameStr = data.name === undefined ? '' : `name = "${data.name}"`;
+  let descStr;
+  if (nameStr === '' && data.description !== undefined) {
+    descStr = `description = "${data.description}"`;
+  } else if (nameStr !== '' && data.description !== undefined) {
+    descStr = `, description = "${data.description}"`;
+  } else {
+    descStr = '';
+  }
+
+  const queryStr = `UPDATE cows SET ${nameStr}${descStr} WHERE id = "${queryId}"`;
+  connection.query(queryStr, function (err, results) {
+    callback(err, results);
+  });
+};
+
 app.get('/cows', (req, res) => {
+  console.log('app.get ran!');
   getAll(function (err, results) {
     if (err) {
       res.status(404).json(err);
@@ -52,7 +70,18 @@ app.post('/cows', (req, res) => {
     if (err) {
       res.status(404).json(err);
     } else {
-      res.status(201).send('Successfully added!');
+      res.status(201).json(results);
+    }
+  });
+});
+
+app.put('/cows/:id', (req, res) => {
+  let queryID = req.params.id;
+  update(req.body, queryID, function (err, results) {
+    if (err) {
+      res.status(404).json(err);
+    } else {
+      res.status(200).json(results);
     }
   });
 });
