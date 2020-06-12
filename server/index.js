@@ -54,6 +54,13 @@ const update = (data, queryId, callback) => {
   });
 };
 
+const deleteRecord = (queryId, callback) => {
+  const queryStr = `DELETE FROM cows WHERE id = "${queryId}"`;
+  connection.query(queryStr, function (err, results) {
+    callback(err, results);
+  });
+};
+
 app.get('/cows', (req, res) => {
   console.log('app.get ran!');
   getAll(function (err, results) {
@@ -82,6 +89,17 @@ app.put('/cows/:id', (req, res) => {
       res.status(404).json(err);
     } else {
       res.status(200).json(results);
+    }
+  });
+});
+
+app.delete('/cows/:id', (req, res) => {
+  let queryId = req.params.id;
+  deleteRecord(queryId, function (err, results) {
+    if (err) {
+      res.status(404);
+    } else {
+      res.status(200).send('Deleted!');
     }
   });
 });
